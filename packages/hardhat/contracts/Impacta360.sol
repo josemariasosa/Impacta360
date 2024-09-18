@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -64,35 +64,43 @@ contract Impacta360 is Ownable, Curator {
     event Donation(address indexed _donator, IERC20 indexed _token, uint256 _amount);
     event DonationInvoice(address indexed _donator, IERC20 indexed _token, uint256 _amount, string _invoiceData);
     event NewWithdrawOrder(address indexed _projectOwner, uint256 indexed _projectId, IERC20 indexed _token, uint256 _amount, string _achievement);
-    event ReleasedFunds(address indexed _projectOwner, uint256 indexed _projectId, IERC20 indexed _token, uint256 _amount, string _evaluation);
+    event ReleasedFunds(address indexed _projectOwner, bool giveFunds, uint256 indexed _projectId, IERC20 indexed _token, uint256 _amount, string _evaluation);
 
     error NotProjectOwner(address _account);
 
-    constructor(address _owner) {}
+    constructor() {}
 
     /// *********
     /// * Owner *
     /// *********
 
-    function addCurator(address _account) external onlyOwner {
+    // function addCurator(address _account) external onlyOwner {
+    function addCurator(address _account) external {
         _addCurator(_account);
     }
 
-    function removeCurator(address _account) external onlyOwner {
+    // function removeCurator(address _account) external onlyOwner {
+    function removeCurator(address _account) external {
         _removeCurator(_account);
     }
 
-    function addValidToken(IERC20 _token) external onlyOwner {
+    // function addValidToken(IERC20 _token) external onlyOwner {
+    function addValidToken(IERC20 _token) external {
         validTokens[address(_token)] = true;
     }
 
-    function removeValidToken(IERC20 _token) external onlyOwner {
+    // function removeValidToken(IERC20 _token) external onlyOwner {
+    function removeValidToken(IERC20 _token) external {
         validTokens[address(_token)] = false;
     }
 
     /// ***********
     /// * Project *
     /// ***********
+
+    function viewProject(uint256 _projectId) external view returns (Project memory) {
+        return projects[_projectId];
+    }
 
     function createProject(
         address _owner,
@@ -114,8 +122,8 @@ contract Impacta360 is Ownable, Curator {
     ) external {
         // Only project owner.
         Project memory project = projects[_projectId];
-        if (msg.sender != project.owner) revert NotProjectOwner(msg.sender);
-        withdrawOrder[_projectId][address(_token)] += _amount;
+        // if (msg.sender != project.owner) revert NotProjectOwner(msg.sender);
+        withdrawOrder[_projectId][address(_token)] = _amount;
 
         emit NewWithdrawOrder(msg.sender, _projectId, _token, _amount, _achievement);
     }
@@ -127,15 +135,20 @@ contract Impacta360 is Ownable, Curator {
     function releaseFunds(
         uint256 _projectId,
         IERC20 _token,
+        bool giveFunds,
         string memory _evaluation
-    ) external onlyCurator {
+    // ) external onlyCurator {
+    ) external {
         uint256 amountToRelease = withdrawOrder[_projectId][address(_token)];
         uint256 available = balances[_projectId][address(_token)];
         Project memory project = projects[_projectId];
         require(amountToRelease <= available, "NotEnoughBalance");
 
-        _token.safeTransfer(project.owner, amountToRelease);
-        emit ReleasedFunds(msg.sender, _projectId, _token, amountToRelease, _evaluation);
+        if (giveFunds) {
+            unchecked { balances[_projectId][address(_token)] -= amountToRelease; }
+            _token.safeTransfer(project.owner, amountToRelease);
+        }
+        emit ReleasedFunds(msg.sender, giveFunds, _projectId, _token, amountToRelease, _evaluation);
     }
 
     /// **********
