@@ -1,21 +1,43 @@
-# 🏗 Scaffold-ETH 2
+# Impacta360
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+<div style="text-align: center;">
+  <img src="media/logo.jpeg" alt="Impacta360 Logo" width="250"/>
+</div>
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+**Impacta360** is a web3 platform that enables NGOs to manage their projects transparently and efficiently.
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, Viem, and Typescript.
+The platform records all donations on **Core DAO** using smart contracts to track fund usage in real-time. Every transaction, from receiving donations in Bitcoin or Ethereum to distributing resources, is registered and visible to donors. Users can support various projects and level up for exclusive benefits on the platform.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+Smart contracts ensure funds are released only when specific milestones are met, offering security and transparency. Additionally, donors can download invoices for tax deductions, making the process easier and encouraging corporate social responsibility.
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+## Table of Contents
+
+- [Impacta360](#impacta360)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Quickstart](#quickstart)
+  - [Team](#team)
+  - [Deployments](#deployments)
+
+## Introduction
+
+Impacta360 is built on the Core DAO blockchain, utilizing custom smart contracts to automate payments and resource management. We integrated curators to validate project outcomes, ensuring that funds are released only when agreed milestones are achieved. Additionally, we designed an intuitive interface for NGOs and donors to monitor progress and funds in real-time.
+
+## Features
+
+<div style="text-align: center;">
+  <img src="media/homepage.jpg" alt="Impacta360 Homepage" width="700"/>
+</div>
+
+1. **NGO Profile Creation and Fund Requests**: Impacta360 allows NGOs to create detailed profiles and request funds for their projects. This feature enables NGOs to showcase their mission, objectives, and funding needs, making it easier for potential donors to understand and support their cause.
+
+2. **Streamlined Donations with Invoice Generation**: Donors can contribute to NGOs directly through the platform. Upon making a donation, the necessary data is automatically uploaded to generate an invoice for fiscal purposes, simplifying the process for tax deductions and providing clear documentation.
+
+3. **Curator-Driven Fund Release**: The release of funds is contingent on the evaluation by curators, who assess the project's progress evidence. This ensures that funds are only released when specific milestones are met, promoting accountability and transparency in project execution.
+
+4. **Flexible Fund Delivery Options**: Impacta360 implements various types of fund delivery processes, including retro funding. This flexibility allows for different funding strategies to accommodate the unique needs of each project, ensuring optimal resource allocation.
 
 ## Requirements
 
@@ -66,15 +88,24 @@ Run smart contract test with `yarn hardhat:test`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
 - Edit your deployment scripts in `packages/hardhat/deploy`
 
+## Team
 
-## Documentation
+- Abi Cupido | Business developer
+- José María Sosa | Blockchain engineer
+- Priscila Daniela Granados Jiménez | Design
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+## Deployments
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+The following contracts were deployed on Core Dao Mainnet to allow the usage of the functionalities.
 
-## Contributing to Scaffold-ETH 2
+```sh
+DEPLOYER: 0x72Bd1188DEA220E8267a8a75992c3e3833399C96
 
-We welcome contributions to Scaffold-ETH 2!
+"Impacta360" 
+tx: 0x73899eb5221d61a55110b1fbe60ff1c66838027eb11687c689da5a49fdfc0993
+deployed at 0x58996D840cA5B77f7Bd25176B7f435b0c2610ca1
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+"USDCToken"
+tx: 0x62375c20de9e7b7f0a5de6dd8721976c7c808ee170179fe8e2aba0b090035cdb
+deployed at 0x9c74092E0aBd322Aa7fE50a330562277A19Cc4BE
+```
